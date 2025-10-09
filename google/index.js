@@ -50,7 +50,7 @@ export class GoogleChat {
     c.data.message = message
 
     if (this.opts.onParse) {
-      await this.opts.onParse(c, { message })
+      await this.opts.onParse(c, { userId: message.sender.name, spaceId: message.space.name, message })
     }
 
     if (input.commonEventObject) {
