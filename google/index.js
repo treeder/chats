@@ -1,11 +1,10 @@
-import { getSpace } from '../../../data/spaces.js'
-import { getUser } from '../../../data/users.js'
-import { GoogleChatFormatter } from '../../text/chatFormatter.js'
 import { chatResponse, textResponse } from './builder.js'
+import { GoogleChatFormatter } from './formatter.js'
 
 export class GoogleChat {
   constructor(c, opts) {
     this.c = c
+    this.opts = opts
     this.actions = opts.actions || {}
     this.formatter = new GoogleChatFormatter()
   }
@@ -29,6 +28,9 @@ export class GoogleChat {
   }
 
   async handleChatRequest(c, input) {
+    if (this.opts.apiURL) {
+      c.data.apiURL = this.opts.apiURL
+    }
     if (!input.chat) {
       return await textResponse(c, "I don't understand this input, no chat field!")
     }
@@ -44,12 +46,12 @@ export class GoogleChat {
 
     let payload = input.chat.appCommandPayload || input.chat.messagePayload || input.chat.buttonClickedPayload
     console.log('payload:', payload)
-    c.data.message = payload.message
+    let message = payload.message
+    c.data.message = message
 
-    let user = await getUser(c, payload.message.sender)
-    c.data.user = user
-    let space = await getSpace(c, payload.message.space)
-    c.data.space = space
+    if (this.opts.onParse) {
+      await this.opts.onParse(c, { message })
+    }
 
     if (input.commonEventObject) {
       // then we have a button clicked or a form posted!
@@ -64,10 +66,6 @@ export class GoogleChat {
           return await this.slashCommand(c, { action: parameters.action, params: parameters, formInput })
         }
       }
-    }
-
-    if (!input.chat) {
-      return await howdy(c)
     }
 
     let r = await this.handleChat(c, payload)

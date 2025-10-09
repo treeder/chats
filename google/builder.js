@@ -99,7 +99,7 @@ function buildCard(c, c2) {
           text: b.text,
           onClick: {
             action: {
-              function: '/v1/gchat',
+              function: c.data.apiURL,
               parameters: params,
             },
           },
@@ -156,7 +156,7 @@ function formField(c, field) {
             text: b.text,
             onClick: {
               action: {
-                function: '/v1/gchat',
+                function: c.data.apiURL,
                 parameters: b.params || [],
               },
             },
