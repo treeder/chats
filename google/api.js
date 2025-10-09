@@ -59,7 +59,7 @@ export class GoogleChatAPI {
     let url = `${this.apiURL}/${spaceId}/messages?messageId=client-${mid}`
     let body = message
     let json = await this.fetch(url, { ...opts, ...{ method: 'POST', body } })
-    console.log('JSON:', json)
+    // console.log('JSON:', json)
     return { message: json }
   }
 
@@ -72,10 +72,10 @@ export class GoogleChatAPI {
    */
   async updateMessage(c, messageId, message, opts = {}) {
     let url = `${this.apiURL}/${messageId}?updateMask=*`
-    console.log(url)
+    // console.log(url)
     let body = message
     let json = await this.fetch(url, { ...opts, ...{ method: 'PATCH', body } })
-    console.log('JSON:', json)
+    // console.log('JSON:', json)
     return { message: json }
   }
 }

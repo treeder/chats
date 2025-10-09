@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "api": "github:treeder/api",
+    "prettier": "^3.6.2",
     "testkit": "github:treeder/testkit"
   },
   "prettier": {
@@ -18,5 +19,8 @@
     "tabWidth": 2,
     "trailingComma": "all",
     "printWidth": 120
+  },
+  "dependencies": {
+    "nanoid": "^5.1.6"
   }
 }

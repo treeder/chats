@@ -1,7 +1,5 @@
 import { nanoid } from 'nanoid'
-import { hostURL } from '../../../utils.js'
-import { GoogleChatFormatter } from '../../text/chatFormatter.js'
-import { GoogleChatAPI } from './chatApi.js'
+import { GoogleChatFormatter } from './formatter.js'
 
 export async function textResponse(c, message) {
   return await chatResponse(c, {
@@ -61,6 +59,7 @@ function buildCard(c, c2) {
       })
     }
   }
+  new GoogleChatFormatter
   if (c2.textBuilder) {
     widgets.push({
       textParagraph: {
@@ -100,7 +99,7 @@ function buildCard(c, c2) {
           text: b.text,
           onClick: {
             action: {
-              function: hostURL(c) + '/v1/gchat',
+              function: '/v1/gchat',
               parameters: params,
             },
           },
@@ -157,7 +156,7 @@ function formField(c, field) {
             text: b.text,
             onClick: {
               action: {
-                function: hostURL(c) + '/v1/gchat',
+                function: '/v1/gchat',
                 parameters: b.params || [],
               },
             },
