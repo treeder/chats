@@ -1,0 +1,22 @@
+{
+  "name": "package",
+  "type": "module",
+  "version": "0.0.6",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd example && npx wrangler pages functions build --outdir=./dist/ && npx wrangler dev --no-bundle ./dist/index.js",
+    "test": "node test/test.js",
+    "ci": "start-server-and-test start 8787 test"
+  },
+  "devDependencies": {
+    "api": "github:treeder/api",
+    "testkit": "github:treeder/testkit"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "printWidth": 120
+  }
+}
