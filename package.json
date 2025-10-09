@@ -1,5 +1,5 @@
 {
-  "name": "package",
+  "name": "chats",
   "type": "module",
   "version": "0.0.7",
   "main": "index.js",
