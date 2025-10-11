@@ -41,11 +41,11 @@ export class GoogleChat {
     if (input.chat.addedToSpacePayload) {
       c.data.logger.log('Added to space', input.chat.addedToSpacePayload)
       let start = this.actions['start'] || { func: this.start }
-      return await start(c, null)
+      return await start.func(c, null)
     }
 
     let payload = input.chat.appCommandPayload || input.chat.messagePayload || input.chat.buttonClickedPayload
-    console.log('payload:', payload)
+    // console.log('payload:', payload)
     let message = payload.message
     c.data.message = message
 
@@ -56,7 +56,7 @@ export class GoogleChat {
     if (input.commonEventObject) {
       // then we have a button clicked or a form posted!
       let evt = input.commonEventObject
-      console.log('evt:', evt)
+      // console.log('evt:', evt)
       // form inputs:
       let formInput = evt.formInputs
       // this is the button paramters:
@@ -69,7 +69,7 @@ export class GoogleChat {
     }
 
     let r = await this.handleChat(c, payload)
-    console.log('sending:', r.hostAppDataAction.chatDataAction.createMessageAction.message)
+    // console.log('sending:', r.hostAppDataAction.chatDataAction.createMessageAction.message)
     return r
   }
 

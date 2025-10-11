@@ -4,7 +4,7 @@
   "version": "0.0.11",
   "main": "index.js",
   "scripts": {
-    "start": "cd example && npx wrangler pages functions build --outdir=./dist/ && npx wrangler dev --no-bundle ./dist/index.js",
+    "start": "cd example && npx -y wrangler pages functions build --outdir=./dist/ && npx wrangler dev --no-bundle ./dist/index.js",
     "test": "node test/test.js",
     "ci": "start-server-and-test start 8787 test"
   },

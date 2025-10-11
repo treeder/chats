@@ -9,7 +9,7 @@ export async function textResponse(c, message) {
 
 export async function chatResponse(c, message, opts = {}) {
   let r = buildResponse(c, message)
-  console.log('response:', r)
+  // console.log('response:', r)
   // console.log(r.cardsV2[0]?.card)
   let mid = nanoid()
   c.data.messageId = mid
