@@ -18,7 +18,8 @@
     "singleQuote": true,
     "tabWidth": 2,
     "trailingComma": "all",
-    "printWidth": 120
+    "printWidth": 120,
+    "bracketSameLine": true
   },
   "dependencies": {
     "nanoid": "^5.1.6"

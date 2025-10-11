@@ -50,7 +50,10 @@ export class GoogleChat {
     c.data.message = message
 
     if (this.opts.onParse) {
-      await this.opts.onParse(c, { userId: message.sender.name, spaceId: message.space.name, message })
+      await this.opts.onParse(c, {
+        userId: message.sender.name, spaceId: message.space.name, message,
+        user: this.normalizeUser(message.sender), space: this.normalizeSpace(message.space)
+      })
     }
 
     if (input.commonEventObject) {
@@ -113,4 +116,27 @@ export class GoogleChat {
       ],
     })
   }
+
+  normalizeUser(u) {
+    if (!u) return null
+    let m = u.name.match(/users\/(.*)$/)
+    return {
+      id: m ? m[1] : u.name,
+      name: u.displayName,
+      email: u.email,
+      type: u.type,
+      image: u.avatarUrl,
+    }
+  }
+
+  normalizeSpace(s) {
+    if (!s) return null
+    let m = s.name.match(/spaces\/(.*)$/)
+    return {
+      id: m ? m[1] : s.name,
+      name: s.displayName,
+      type: s.type,
+    }
+  }
+
 }
