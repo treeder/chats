@@ -22,6 +22,7 @@
     "bracketSameLine": true
   },
   "dependencies": {
-    "nanoid": "^5.1.6"
+    "nanoid": "^5.1.6",
+    "web-auth-library": "^1.0.3"
   }
 }
