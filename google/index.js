@@ -49,10 +49,14 @@ export class GoogleChat {
     let message = payload.message
     c.data.message = message
 
+    // user who initiated is input.chat.user
+    // user who sent the message is message.sender
+
     if (this.opts.onParse) {
       await this.opts.onParse(c, {
-        userId: message.sender.name, spaceId: message.space.name, message,
-        user: this.normalizeUser(message.sender), space: this.normalizeSpace(message.space)
+        userId: input.chat.user.name,
+        spaceId: message.space.name, message,
+        user: this.normalizeUser(input.chat.user), space: this.normalizeSpace(message.space)
       })
     }
 
