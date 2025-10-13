@@ -1,7 +1,7 @@
 {
   "name": "chats",
   "type": "module",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "main": "index.js",
   "scripts": {
     "start": "cd example && npx -y wrangler pages functions build --outdir=./dist/ && npx wrangler dev --no-bundle ./dist/index.js",
