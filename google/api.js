@@ -50,6 +50,7 @@ export class GoogleChatAPI {
   /**
    * https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/patch#query-parameters
    *
+   * @param {string} spaceId
    * @param {object} message
    * @param {object} opts
    */

@@ -8,7 +8,7 @@ export async function textResponse(c, message) {
 }
 
 export async function chatResponse(c, message, opts = {}) {
-  let r = buildResponse(c, message)
+  let r = buildMessage(c, message)
   // console.log('response:', r)
   // console.log(r.cardsV2[0]?.card)
   let mid = nanoid()
@@ -26,7 +26,7 @@ export async function chatResponse(c, message, opts = {}) {
   }
 }
 
-function buildResponse(c, content) {
+export function buildMessage(c, content) {
   let text = content.text
 
   let cards = []
