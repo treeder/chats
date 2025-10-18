@@ -123,9 +123,9 @@ export class GoogleChat {
 
   normalizeUser(u) {
     if (!u) return null
-    let m = u.name.match(/users\/(.*)$/)
+    // let m = u.name.match(/users\/(.*)$/) // if we want to strip off the users/ prefix
     return {
-      id: m ? m[1] : u.name,
+      id: u.name, // m ? m[1] : u.name,
       name: u.displayName,
       email: u.email,
       type: u.type,
@@ -135,9 +135,9 @@ export class GoogleChat {
 
   normalizeSpace(s) {
     if (!s) return null
-    let m = s.name.match(/spaces\/(.*)$/)
+    // let m = s.name.match(/spaces\/(.*)$/) // if we want to strip off the spaces/ prefix
     return {
-      id: m ? m[1] : s.name,
+      id: s.name, // m ? m[1] : s.name,
       name: s.displayName,
       type: s.type,
     }
