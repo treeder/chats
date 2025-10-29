@@ -84,7 +84,7 @@ export class GoogleChat {
     let text = payload.message.text
     console.log('text:', text)
 
-    if (text.startsWith('/')) {
+    if (text && text.startsWith('/')) {
       let command = text.split(' ')[0].slice(1)
       console.log('command:', command)
       let args = text.split(' ').slice(1)
