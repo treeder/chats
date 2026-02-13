@@ -59,7 +59,7 @@ function buildCard(c, c2) {
       })
     }
   }
-  new GoogleChatFormatter
+  new GoogleChatFormatter()
   if (c2.textBuilder) {
     widgets.push({
       textParagraph: {
@@ -131,11 +131,14 @@ function buildCard(c, c2) {
     card.header = {
       title: c2.header.title,
     }
-    if (c2.header.subTitle) {
-      card.header.subtitle = c2.header.subTitle
+    if (c2.header.subtitle || c2.header.subTitle) {
+      card.header.subtitle = c2.header.subtitle || c2.header.subTitle
     }
     if (c2.header.image) {
       card.header.imageUrl = c2.header.image
+    }
+    if (c2.header.imageShape) {
+      card.header.imageType = c2.header.imageShape.toUpperCase() // SQUARE, CIRCLE
     }
   }
   card.sections = [
