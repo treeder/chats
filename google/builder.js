@@ -155,12 +155,23 @@ function formField(c, field) {
     return {
       buttonList: {
         buttons: field.buttons.map((b) => {
+          let params = []
+          if(b.action){
+            params.push(
+            {
+              key: 'action',
+              value: b.action,
+            })
+          ]
+          if (b.params) {
+            params.push(...b.params)
+          }
           return {
             text: b.text,
             onClick: {
               action: {
                 function: c.data.apiURL,
-                parameters: b.params || [],
+                parameters: params,
               },
             },
           }
