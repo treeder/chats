@@ -162,7 +162,7 @@ function formField(c, field) {
               key: 'action',
               value: b.action,
             })
-          ]
+          }
           if (b.params) {
             params.push(...b.params)
           }
