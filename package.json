@@ -1,17 +1,21 @@
 {
   "name": "chats",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "start": "cd example && npx -y wrangler pages functions build --outdir=./dist/ && npx wrangler dev --no-bundle ./dist/index.js",
     "test": "node test/test.js",
     "ci": "start-server-and-test start 8787 test"
   },
+  "dependencies": {
+    "nanoid": "^5.1.6",
+    "web-auth-library": "^1.0.3"
+  },
   "devDependencies": {
-    "api": "github:treeder/api",
+    "api": "github:treeder/api#semver:^1.0.6",
     "prettier": "^3.6.2",
-    "testkit": "github:treeder/testkit"
+    "testkit": "github:treeder/testkit#semver:^2.0.8"
   },
   "prettier": {
     "semi": false,
@@ -20,9 +24,5 @@
     "trailingComma": "all",
     "printWidth": 120,
     "bracketSameLine": true
-  },
-  "dependencies": {
-    "nanoid": "^5.1.6",
-    "web-auth-library": "^1.0.3"
   }
 }

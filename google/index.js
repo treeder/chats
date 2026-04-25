@@ -55,8 +55,10 @@ export class GoogleChat {
     if (this.opts.onParse) {
       await this.opts.onParse(c, {
         userId: input.chat.user.name,
-        spaceId: message.space.name, message,
-        user: this.normalizeUser(input.chat.user), space: this.normalizeSpace(message.space)
+        spaceId: message.space.name,
+        message,
+        user: this.normalizeUser(input.chat.user),
+        space: this.normalizeSpace(message.space),
       })
     }
 
@@ -90,6 +92,15 @@ export class GoogleChat {
       let args = text.split(' ').slice(1)
       console.log('args:', args)
       return await this.slashCommand(c, { action: command, args: args })
+    } else if (!payload.message.slashCommand) {
+      let text2 = payload.message.argumentText.trim()
+      let split = text2.split(' ')
+      let cmd = split[0]
+      let args = split.slice(1)
+      if (this.actions[cmd]) {
+        console.log(`Executing action ${cmd}`)
+        return await this.actions[cmd].func(c, { text, payload, cmd, args })
+      }
     }
     if (this.actions.chat) {
       return await this.actions.chat.func(c, { text, payload })
@@ -142,5 +153,4 @@ export class GoogleChat {
       type: s.type,
     }
   }
-
 }
