@@ -13,7 +13,7 @@ export class GoogleChat {
   // args.params is an object with key/values
   async slashCommand(c, args) {
     let action = args.action
-    console.log('action:', action)
+    console.log('slashCommand: action:', action)
     let cmd = this.actions
     let path = action.split('.')
     for (let i = 0; i < path.length; i++) {
@@ -93,6 +93,7 @@ export class GoogleChat {
       console.log('args:', args)
       return await this.slashCommand(c, { action: command, args: args })
     } else if (!payload.message.slashCommand) {
+      if(payload.message.argumentText){
       let text2 = payload.message.argumentText.trim()
       let split = text2.split(' ')
       let cmd = split[0]
@@ -101,6 +102,7 @@ export class GoogleChat {
         console.log(`Executing action ${cmd}`)
         return await this.actions[cmd].func(c, { text, payload, cmd, args })
       }
+    }
     }
     if (this.actions.chat) {
       return await this.actions.chat.func(c, { text, payload })
