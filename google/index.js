@@ -34,32 +34,42 @@ export class GoogleChat {
     if (!input.chat) {
       return await textResponse(c, "I don't understand this input, no chat field!")
     }
-    if (input.chat.removedFromSpacePayload) {
-      c.data.logger.log('Removed from space', input.chat.removedFromSpacePayload)
-      return { message: 'Removed from space' }
-    }
-    if (input.chat.addedToSpacePayload) {
-      c.data.logger.log('Added to space', input.chat.addedToSpacePayload)
-      let start = this.actions['start'] || { func: this.start }
-      return await start.func(c, null)
-    }
-
-    let payload = input.chat.appCommandPayload || input.chat.messagePayload || input.chat.buttonClickedPayload
-    // console.log('payload:', payload)
-    let message = payload.message
-    c.data.message = message
 
     // user who initiated is input.chat.user
     // user who sent the message is message.sender
 
+    let payload =
+      input.chat.appCommandPayload ||
+      input.chat.messagePayload ||
+      input.chat.buttonClickedPayload ||
+      input.chat.removedFromSpacePayload ||
+      input.chat.addedToSpacePayload
+    // console.log('payload:', payload)
+    let message = payload.message
+    c.data.message = message
+
     if (this.opts.onParse) {
       await this.opts.onParse(c, {
         userId: input.chat.user.name,
-        spaceId: message.space.name,
+        spaceId: payload.space.name,
         message,
         user: this.normalizeUser(input.chat.user),
-        space: this.normalizeSpace(message.space),
+        space: this.normalizeSpace(payload.space),
       })
+    }
+
+    if (input.chat.removedFromSpacePayload) {
+      c.data.logger.log('Removed from space', input.chat.removedFromSpacePayload)
+      let removed = this.actions['removed']
+      if (removed) {
+        return await removed.func(c, { payload })
+      }
+      return { message: 'Removed from space' }
+    }
+    if (input.chat.addedToSpacePayload) {
+      c.data.logger.log('Added to space', input.chat.addedToSpacePayload)
+      let start = this.actions['added'] || this.actions['start'] || { func: this.start }
+      return await start.func(c, { payload })
     }
 
     if (input.commonEventObject) {
@@ -93,16 +103,16 @@ export class GoogleChat {
       console.log('args:', args)
       return await this.slashCommand(c, { action: command, args: args })
     } else if (!payload.message.slashCommand) {
-      if(payload.message.argumentText){
-      let text2 = payload.message.argumentText.trim()
-      let split = text2.split(' ')
-      let cmd = split[0]
-      let args = split.slice(1)
-      if (this.actions[cmd]) {
-        console.log(`Executing action ${cmd}`)
-        return await this.actions[cmd].func(c, { text, payload, cmd, args })
+      if (payload.message.argumentText) {
+        let text2 = payload.message.argumentText.trim()
+        let split = text2.split(' ')
+        let cmd = split[0]
+        let args = split.slice(1)
+        if (this.actions[cmd]) {
+          console.log(`Executing action ${cmd}`)
+          return await this.actions[cmd].func(c, { text, payload, cmd, args })
+        }
       }
-    }
     }
     if (this.actions.chat) {
       return await this.actions.chat.func(c, { text, payload })
