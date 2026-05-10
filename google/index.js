@@ -24,6 +24,10 @@ export class GoogleChat {
         break
       }
     }
+    if (!cmd) {
+      return await this.unknownAction(c, args)
+    }
+
     return await cmd.func(c, args)
   }
 
