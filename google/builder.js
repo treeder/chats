@@ -80,6 +80,14 @@ function buildCard(c, c2) {
       },
     })
   }
+  if (c2.grid) {
+    widgets.push({
+      grid: c2.grid,
+    })
+  }
+  if (c2.widgets) {
+    widgets.push(...c2.widgets)
+  }
   if (c2.buttons) {
     let buttons = []
     // console.log('buttons:', c2.buttons)
@@ -156,9 +164,8 @@ function formField(c, field) {
       buttonList: {
         buttons: field.buttons.map((b) => {
           let params = []
-          if(b.action){
-            params.push(
-            {
+          if (b.action) {
+            params.push({
               key: 'action',
               value: b.action,
             })
